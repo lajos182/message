@@ -26,7 +26,7 @@ class OrderResult(AsyncWebsocketConsumer):
             self.channel_name
         )
 
-    # 收到消息
+    # Receive message from WebSocket
     async def receive(self, text_data=None, bytes_data=None):
         text_data_json = json.loads(text_data)
         message = text_data_json['message']
@@ -40,7 +40,7 @@ class OrderResult(AsyncWebsocketConsumer):
             }
         )
 
-    # 处理客户端发来的消息
+    # Receive message from room group
     async def client_message(self, event):
         message = event['message']
         print('发送消息。。。', message)
@@ -122,12 +122,12 @@ class BeatServer(SyncConsumer):
 #             'message': message
 #         }))
 
+channel_layer = get_channel_layer()
 def send_group_msg(service_uid, message):
-    channel_layer = get_channel_layer()
     async_to_sync(channel_layer.group_send)(
         f'chat_{service_uid}',
         {
-            'type': 'client_message',
+            'type': 'client.message',
             'message': message
         }
     )
@@ -136,4 +136,5 @@ if __name__ == '__main__':
     import os
     if not os.getenv('DJANGO_SETTINGS_MODULE'):
         os.environ['DJANGO_SETTINGS_MODULE'] = 'message.settings'
-    send_group_msg('bbb', 'hello world')
+
+    send_group_msg('123', 'hello world')
