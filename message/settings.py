@@ -156,7 +156,7 @@ CHANNEL_LAYERS = {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
             # 'hosts': [('127.0.0.1', 6379)],
-            'hosts': ['redis://127.0.0.1:6379/0'], #需修改
+            'hosts': ['redis://：lajosjiang@127.0.0.1:6379/0'], #需修改
         },
     },
 }
